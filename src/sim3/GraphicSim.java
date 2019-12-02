@@ -57,10 +57,13 @@ public class GraphicSim extends JPanel implements MouseListener {
 		int x = (int) Util.posModulo(Main.robot.x * Constants.DISPLAY_SCALE.getDouble(), windowWidth); // robot position in pixels
 		int y = (int) Util.posModulo(Main.robot.y * Constants.DISPLAY_SCALE.getDouble(), windowHeight);
 
-		g.drawString("linear velocity (ft/sec) " + Util.roundHundreths(Util.metersToFeet(Main.robot.linVelo)), 500, 750);
-		g.drawString("left power "+ Util.roundHundreths(UserCode.lPower), 500, 775);
-		g.drawString("right power "+ Util.roundHundreths(UserCode.rPower), 500, 800);
-		g.drawString("elapsed time " + Util.roundHundreths(Main.elaspedTime), 500, 825);
+		g.drawString("linear velocity (ft/sec) " + Util.roundHundreths(Util.metersToFeet(Main.robot.linVelo)), 500, 650);
+		g.drawString("left module force "+ Util.roundHundreths(Main.robot.leftModule.force), 500, 675);
+		g.drawString("top motor torque "+ Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 500, 700);
+		g.drawString("bottom motor torque " + Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 500, 725);
+		g.drawString("top motor speed " + Util.roundHundreths(Main.robot.leftModule.topMotor.radPerSec), 500, 750);
+		g.drawString("bottom motor torque " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.radPerSec), 500, 775);
+
 
 		//drawing the grid
 		g.setColor(Color.GRAY.brighter());

@@ -41,7 +41,8 @@ public class Robot{
         dt = (System.nanoTime() - lastTime) / 1e+9; //change in time (seconds) used for integrating
         lastTime = System.nanoTime();
 
-
+        leftModule.distributeVelocities(veloL / Constants.WHEEL_RADIUS.getDouble(), 0);
+        rightModule.distributeVelocities(veloR / Constants.WHEEL_RADIUS.getDouble(), 0);
         
 
         torqueNet = calcTorqueNet(leftModule.getForce(), rightModule.getForce()); //newton*meters
