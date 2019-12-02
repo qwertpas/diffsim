@@ -1,0 +1,95 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "sim3.Main",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - DiffModule",
+            "request": "launch",
+            "mainClass": "sim3.DiffModule",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Controls",
+            "request": "launch",
+            "mainClass": "sim3.Controls",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Util$MotionProfile",
+            "request": "launch",
+            "mainClass": "sim3.Util$MotionProfile",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Util",
+            "request": "launch",
+            "mainClass": "sim3.Util",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - te",
+            "request": "launch",
+            "mainClass": "sim3.te",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GraphicInput",
+            "request": "launch",
+            "mainClass": "sim3.GraphicInput",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Robot",
+            "request": "launch",
+            "mainClass": "sim3.Robot",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Robot",
+            "request": "launch",
+            "mainClass": "sim2.Robot",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Physics",
+            "request": "launch",
+            "mainClass": "sim2.Physics",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - JoystickSim",
+            "request": "launch",
+            "mainClass": "jinputjoysticktestv2.JoystickSim",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - VisionTargetSim",
+            "request": "launch",
+            "mainClass": "jinputjoysticktestv2.VisionTargetSim",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - WindowSim3",
+            "request": "launch",
+            "mainClass": "jinputjoysticktestv2.WindowSim3",
+            "projectName": "joysim"
+        }
+    ]
+}
