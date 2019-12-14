@@ -27,10 +27,10 @@ public class GraphicSim extends JPanel implements MouseListener {
 	AffineTransform defaultTransform = new AffineTransform(); //to reset the g2d position and rotation
 
 	static File robotFile;
-	static File targetFile;
+	static File moduleFile;
 
 	static Image robotImage;
-	static Image targetImage;
+	static Image moduleImage;
 
 	static int screenHeight;
 	static int screenWidth;
@@ -57,12 +57,16 @@ public class GraphicSim extends JPanel implements MouseListener {
 		int x = (int) Util.posModulo(Main.robot.position.x * Constants.DISPLAY_SCALE.getDouble(), windowWidth); // robot position in pixels
 		int y = (int) Util.posModulo(Main.robot.position.y * Constants.DISPLAY_SCALE.getDouble(), windowHeight);
 
-		g.drawString("linear velocity (ft/sec) " + Util.roundHundreths(Util.metersToFeet(Main.robot.leftModule.wheelTanVelo)), 500, 650);
-		g.drawString("L module force "+ Util.roundHundreths(Main.robot.leftModule.force), 500, 675);
-		g.drawString("LT motor torque "+ Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 500, 700);
-		g.drawString("LB motor torque " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.torque), 500, 725);
-		g.drawString("LT motor speed " + Util.roundHundreths(Main.robot.leftModule.topMotor.angVelo), 500, 750);
-		g.drawString("LB motor speed " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.angVelo), 500, 775);
+		g.drawString("force net x " + Util.roundHundreths(Main.robot.forceNet.x), 500, 575);
+		// g.drawString("force net y " + Util.roundHundreths(Main.robot.forceNet.y), 500, 600);
+		g.drawString("lin velo " + Util.roundHundreths(Main.robot.linVelo.getMagnitude()), 500, 625);
+		// g.drawString("position " + Util.roundHundreths(Util.metersToFeet(Main.robot.forceNet.getMagnitude())), 500, 650);
+		g.drawString("L module force "+ Util.roundHundreths(Main.robot.leftModule.force.x), 500, 675);
+		g.drawString("R module force "+ Util.roundHundreths(Main.robot.rightModule.force.x), 500, 700);
+		g.drawString("LT motor torque " + Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 500, 725);
+		g.drawString("LB motor torque " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.torque), 500, 750);
+		g.drawString("RT motor torque " + Util.roundHundreths(Main.robot.rightModule.topMotor.torque), 500, 775);
+		g.drawString("RB motor torque " + Util.roundHundreths(Main.robot.rightModule.bottomMotor.torque), 500, 800);
 
 
 		//drawing the grid
@@ -81,14 +85,16 @@ public class GraphicSim extends JPanel implements MouseListener {
 		g2d.rotate(Main.robot.heading, robotCenterX, robotCenterY);
 
 		g2d.scale(robotScale, robotScale);
-		
-		g.drawImage(robotImage, (int) (x / robotScale), (int) (y / robotScale), this);
-		g.setColor(Color.GREEN);
-		g.drawString("o", (int) (robotCenterX / robotScale), (int) (robotCenterY / robotScale));
+		g.translate((int) (x / robotScale), (int) (y / robotScale));
+		g.drawImage(robotImage, 0,0, this);
+
+		g.drawImage(moduleImage, robotDisplayWidth/2, 0, this);
+		g.drawImage(moduleImage, robotDisplayWidth/2, robotDisplayWidth, this);
 
 
-		g2d.setTransform(defaultTransform);
-		g2d.scale(robotScale, robotScale);
+
+		// g2d.setTransform(defaultTransform);
+		// g2d.scale(robotScale, robotScale);
 
 		// g.drawImage(targetImage, (int) (1600 / robotScale), (int) (200 / robotScale), this);
 
@@ -100,10 +106,10 @@ public class GraphicSim extends JPanel implements MouseListener {
 		screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		try {
 			robotFile = new File("./robot.png");
-			targetFile = new File("./target.png");
+			moduleFile = new File("./module.png");
 
 			robotImage = ImageIO.read(robotFile);
-			targetImage = ImageIO.read(targetFile);
+			moduleImage = ImageIO.read(moduleFile);
 
 			setDisplayScales(robotFile);
 		} catch (IOException e) {

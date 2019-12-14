@@ -33,9 +33,9 @@ public class Constants{
     static Constant GEAR_RATIO = new Constant("GEAR_RATIO", 4, Type.DOUBLE);
     static Constant MODULE_ROT_INERTIA = new Constant("MODULE_ROT_INERTIA", 0.0005, Type.DOUBLE); //Assume a cylinder with radius 0.1m mass 0.1kg
 
-    static Constant ROBOT_MASS = new Constant("ROBOT_MASS", 45.3592, Type.DOUBLE);
-    static Constant ROBOT_WIDTH = new Constant("ROBOT_WIDTH", 0.6096, Type.DOUBLE);
-    static Constant DIST_BETWEEN_WHEELS = new Constant("DIST_BETWEEN_WHEELS", 0.508, Type.DOUBLE);
+    static Constant ROBOT_MASS = new Constant("ROBOT_MASS", 10, Type.DOUBLE);
+    static Constant ROBOT_WIDTH = new Constant("ROBOT_WIDTH", 0.46, Type.DOUBLE);
+    static Constant DIST_BETWEEN_WHEELS = new Constant("DIST_BETWEEN_WHEELS", 0.4, Type.DOUBLE);
     static Constant WHEEL_RADIUS = new Constant("WHEEL_RADIUS", 0.0762, Type.DOUBLE);
     static Constant STATIC_FRIC_COEFF = new Constant("STATIC_FRIC_COEFF", 1.1, Type.DOUBLE); //between wheels and ground
     static Constant KINE_FRIC_COEFF = new Constant("KINE_FRIC_COEFF", 0.7, Type.DOUBLE); //should be < static

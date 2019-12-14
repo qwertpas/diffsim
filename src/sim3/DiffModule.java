@@ -9,14 +9,15 @@ class DiffModule {
     Motor topMotor;
     Motor bottomMotor;
 
-    Vector2D moduleTranslation; //translational velocity of the module
+    Vector2D moduleTranslation = new Vector2D(0, 0); //translational velocity of the module
     double wheelTanVelo;
     double wheelAngVelo; //angular velocity of the wheel
     double moduleAngVelo; //angular velocity of the module
-    double moduleAngle;
+    double moduleAngle = 0;
 
     double wheelTorque;
-    double force;
+
+    Vector2D force = new Vector2D(0, 0);
 
     double dt;
     double lastTime;
@@ -24,22 +25,21 @@ class DiffModule {
     DiffModule() {
         topMotor = new Motor();
         bottomMotor = new Motor();
-        moduleAngle = 0;        
         lastTime = System.nanoTime();
     }
 
-    Vector2D getForce() {
+    void update() {
         wheelTanVelo = (new Vector2D(moduleAngle)).dotProduct(moduleTranslation); //tangential velocity of the wheel
         wheelAngVelo = wheelTanVelo / Constants.WHEEL_RADIUS.getDouble(); //tangential velocity = radius * angular velocity
 
         updateMotorSpeeds();
-        updateModuleAngle();
+        // updateModuleAngle();
 
         wheelTorque = (topMotor.getTorque() - bottomMotor.getTorque()) * Constants.GEAR_RATIO.getDouble();
-        wheelTorque = Util.applyFrictions(wheelAngVelo, wheelAngVelo, 0.2, 0.2, 0.1);
+        // wheelTorque = Util.applyFrictions(wheelTorque, wheelAngVelo, 0.1, 0.1, 0.01);
 
         double force_mag = wheelTorque / Constants.WHEEL_RADIUS.getDouble(); //F=ma
-        return new Vector2D(force_mag, moduleAngle);
+        force = new Vector2D(force_mag, moduleAngle);
     }
 
     void setTranslation(Vector2D moduleTranslation_input) {
@@ -66,7 +66,7 @@ class DiffModule {
         SimpleMatrix ringsMatrix = diffMatrix.solve(wheelMatrix);
 
         topMotor.setAngSpeed(ringsMatrix.get(0, 0));
-        bottomMotor.setAngSpeed(-ringsMatrix.get(1, 0));
+        bottomMotor.setAngSpeed(ringsMatrix.get(1, 0));
     }
 
 

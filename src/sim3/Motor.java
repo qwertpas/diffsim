@@ -16,8 +16,6 @@ class Motor{
 
     double getTorque(){ //input is radians per second
         torque = Constants.STALL_TORQUE.getDouble() * ((voltage/12.0) - (angVelo / Constants.FREE_SPEED.getDouble()));
-        System.out.println("torq: " + torque);
-
         return torque;
     }
 

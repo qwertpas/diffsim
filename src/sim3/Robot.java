@@ -6,7 +6,7 @@ public class Robot{
 
     DiffModule leftModule, rightModule;
 
-    Vector2D position = new Vector2D(5, 5);
+    Vector2D position = new Vector2D(10, 10);
     double heading = 0;
 
     Vector2D linVelo = new Vector2D(0, 0);
@@ -15,22 +15,12 @@ public class Robot{
     Vector2D linAccel = new Vector2D(0, 0);
     double angAccel = 0;
 
-    double veloL = 0;
-    double veloR = 0;
-
-    double distL = 0;
-    double distR = 0;
-
-    double torqueL;
-    double torqueR;
-    double torqueNet;
-    Vector2D forceNet;
+    double torqueNet = 0;
+    Vector2D forceNet = new Vector2D(0, 0);
     Boolean slipping = false;
 
     double dt;
     double lastTime;
-
-    
 
     Robot(){
         lastTime = System.nanoTime();
@@ -42,19 +32,24 @@ public class Robot{
         dt = (System.nanoTime() - lastTime) / 1e+9; //change in time (seconds) used for integrating
         lastTime = System.nanoTime();
 
-        forceNet = leftModule.getForce().add(rightModule.getForce()); //force on robot center of mass
-        torqueNet = calcRobotTorque(leftModule.getForce(), rightModule.getForce()); //torque around robot center
+        leftModule.update();
+        rightModule.update();
+
+        forceNet = leftModule.force.add(rightModule.force); //force on robot center of mass
+        // torqueNet = calcRobotTorque(leftModule.force, rightModule.force); //torque around robot center
 
         linAccel = forceNet.scalarDiv(Constants.ROBOT_MASS.getDouble()); //linear acceleration of robot center of mass
-        angAccel = torqueNet / Constants.ROBOT_ROT_INERTIA; //angular acceleration around robot center
+        // angAccel = torqueNet / Constants.ROBOT_ROT_INERTIA; //angular acceleration around robot center
         
         linVelo = linAccel.scalarMult(dt).add(linVelo); //linear velocity of robot center of mass
-        angVelo = angVelo + angAccel * dt; //angular velocity around robot center
+        // angVelo = angVelo + angAccel * dt; //angular velocity around robot center
 
-        leftModule.setTranslation(linVelo.scalarAdd(angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
-        rightModule.setTranslation(linVelo.scalarAdd(-angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
+        // leftModule.setTranslation(linVelo.scalarAdd(angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
+        // rightModule.setTranslation(linVelo.scalarAdd(-angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
+        leftModule.setTranslation(linVelo);
+        rightModule.setTranslation(linVelo);
 
-        heading = heading + angVelo * dt; //integrating angVelo
+        // heading = heading + angVelo * dt; //integrating angVelo
 
         position = linVelo.scalarMult(dt).add(position);
     }

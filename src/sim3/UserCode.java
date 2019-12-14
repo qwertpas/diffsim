@@ -15,7 +15,7 @@ public class UserCode{
 
     public static void execute(){ //this function is run 50 times a second (every 0.02 second)
 
-        double forward = Controls.rawY;
+        double forward = -Controls.rawY;
         
         Main.robot.setDrivePowers(forward, -forward, forward, -forward); //power ranges from -1 to 1
 
