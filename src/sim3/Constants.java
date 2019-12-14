@@ -29,8 +29,9 @@ public class Constants{
 
 
     static Constant STALL_TORQUE = new Constant("STALL_TORQUE", 0.537, Type.DOUBLE); //76 oz-in for yellowjacket 3.7, converted to newton*meters
-    static Constant FREE_SPEED = new Constant("FREE_SPEED", 181, Type.DOUBLE); //1730 rpm for yellowjacket 3.7, converted to rad/sec
+    static Constant FREE_SPEED = new Constant("FREE_SPEED", 169.6, Type.DOUBLE); //1620 rpm for yellowjacket 3.7, converted to rad/sec
     static Constant GEAR_RATIO = new Constant("GEAR_RATIO", 4, Type.DOUBLE);
+    static Constant MODULE_ROT_INERTIA = new Constant("MODULE_ROT_INERTIA", 0.0005, Type.DOUBLE); //Assume a cylinder with radius 0.1m mass 0.1kg
 
     static Constant ROBOT_MASS = new Constant("ROBOT_MASS", 45.3592, Type.DOUBLE);
     static Constant ROBOT_WIDTH = new Constant("ROBOT_WIDTH", 0.6096, Type.DOUBLE);
@@ -65,6 +66,7 @@ public class Constants{
 
     //constants that are editable by GraphicInput
     static Constant[] constants = {GEAR_RATIO, 
+                                   MODULE_ROT_INERTIA,
                                    ROBOT_MASS, 
                                    ROBOT_WIDTH, 
                                    DIST_BETWEEN_WHEELS,

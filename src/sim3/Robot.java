@@ -1,17 +1,18 @@
 package sim3;
 
+import sim3.Util.*;
+
 public class Robot{
 
     DiffModule leftModule, rightModule;
 
-    double x = 5;
-    double y = 6;
+    Vector2D position = new Vector2D(5, 5);
     double heading = 0;
 
-    double linVelo = 0;
+    Vector2D linVelo = new Vector2D(0, 0);
     double angVelo = 0;
 
-    double linAccel = 0.1;
+    Vector2D linAccel = new Vector2D(0, 0);
     double angAccel = 0;
 
     double veloL = 0;
@@ -23,7 +24,7 @@ public class Robot{
     double torqueL;
     double torqueR;
     double torqueNet;
-    double forceNet;
+    Vector2D forceNet;
     Boolean slipping = false;
 
     double dt;
@@ -41,51 +42,27 @@ public class Robot{
         dt = (System.nanoTime() - lastTime) / 1e+9; //change in time (seconds) used for integrating
         lastTime = System.nanoTime();
 
-        leftModule.distributeVelocities(veloL / Constants.WHEEL_RADIUS.getDouble(), 0);
-        rightModule.distributeVelocities(veloR / Constants.WHEEL_RADIUS.getDouble(), 0);
+        forceNet = leftModule.getForce().add(rightModule.getForce()); //force on robot center of mass
+        torqueNet = calcRobotTorque(leftModule.getForce(), rightModule.getForce()); //torque around robot center
+
+        linAccel = forceNet.scalarDiv(Constants.ROBOT_MASS.getDouble()); //linear acceleration of robot center of mass
+        angAccel = torqueNet / Constants.ROBOT_ROT_INERTIA; //angular acceleration around robot center
         
+        linVelo = linAccel.scalarMult(dt).add(linVelo); //linear velocity of robot center of mass
+        angVelo = angVelo + angAccel * dt; //angular velocity around robot center
 
-        torqueNet = calcTorqueNet(leftModule.getForce(), rightModule.getForce()); //newton*meters
-        forceNet = leftModule.getForce() + rightModule.getForce(); //newtons
-
-        angAccel = torqueNet / Constants.ROBOT_ROT_INERTIA; //rad per sec per sec
-        linAccel = forceNet / Constants.ROBOT_MASS.getDouble(); //meters per sec per sec
-
-        angVelo = angVelo + angAccel * dt;
-        linVelo = linVelo + linAccel * dt;
-        veloL = linVelo + Constants.HALF_DIST_BETWEEN_WHEELS * angVelo; //theoretical. untested if this model works
-        veloR = linVelo - Constants.HALF_DIST_BETWEEN_WHEELS * angVelo;
+        leftModule.setTranslation(linVelo.scalarAdd(angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
+        rightModule.setTranslation(linVelo.scalarAdd(-angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
 
         heading = heading + angVelo * dt; //integrating angVelo
-        distL = distL + veloL * dt; //acting as encoder since integrateVelocity() inside motor isn't working
-        distR = distR + veloR * dt;
 
-        x = x + linVelo * dt * Math.cos(heading); //for display purposes
-        y = y + linVelo * dt * Math.sin(heading);
+        position = linVelo.scalarMult(dt).add(position);
     }
 
-
-    private double calcWheelForce(double torque){
-        double force = torque / Constants.WHEEL_RADIUS.getDouble();
-        if(force > Constants.STATIC_FRIC * 0.5){
-            force = Constants.KINE_FRIC;
-            slipping = true;
-        } else slipping = false;
-        return force;
-    }
-
-    private double calcTorqueNet(double forceL, double forceR){
-        double torqueMotors = (forceL - forceR) * Constants.HALF_DIST_BETWEEN_WHEELS; //torque around center of robot
-        //apply scrub
+    private double calcRobotTorque(Vector2D forceL, Vector2D forceR){
+        double torqueMotors = (forceL.getMagnitude() - forceR.getMagnitude()) * Constants.HALF_DIST_BETWEEN_WHEELS; //torque around center of robot
         torqueNet = Util.applyFrictions(torqueMotors, angVelo, Constants.WHEEL_SCRUB_STATIC, Constants.WHEEL_SCRUB_KINE, Constants.WHEEL_SCRUB_FRIC_THRESHOLD.getDouble());
         return torqueNet;
-    }
-
-
-    
-
-    public String toString(){
-        return x +" "+ y +" "+ heading +" "+ linVelo +" "+ angVelo +" "+ linAccel +" "+ angAccel;
     }
 
     public void setDrivePowers(double lt, double lb, double rt, double rb){

@@ -382,4 +382,58 @@ public class Util {
     }
   }
 
+  public static class Vector2D{
+    double x, y;
+
+    Vector2D(double magnitude, double direction){
+      x = magnitude * Math.cos(direction);
+      y = magnitude * Math.sin(direction);
+    }
+
+    Vector2D(){
+      //empty so that you can set x and y yourself
+    }
+
+    Vector2D(double direction){
+      x = Math.cos(direction);
+      y = Math.sin(direction);
+    }
+
+    Vector2D add(Vector2D f){
+      Vector2D forcesum = new Vector2D();
+      forcesum.x = this.x + f.x;
+      forcesum.y = this.y + f.y;
+      return forcesum;
+    }
+
+    Vector2D subtract(Vector2D f){
+      Vector2D forcesum = new Vector2D();
+      forcesum.x = this.x - f.x;
+      forcesum.y = this.y - f.y;
+      return forcesum;
+    }
+
+    double dotProduct(Vector2D f){
+      return this.x * f.x + this.y * f.y;
+    }
+
+    Vector2D scalarAdd(double scalar){
+      return new Vector2D(this.x+scalar, this.y+scalar);
+    }
+
+    Vector2D scalarMult(double scalar){
+      return new Vector2D(this.x*scalar, this.y*scalar);
+    }
+
+    Vector2D scalarDiv(double scalar){
+      return new Vector2D(this.x/(double)scalar, this.y/(double)scalar);
+    }
+
+    double getMagnitude(){
+      return Math.sqrt(x*x + y*y);
+    }
+
+  }
+
+
 }

@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Util$Force",
+            "request": "launch",
+            "mainClass": "sim3.Util$Force",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Main",
             "request": "launch",
             "mainClass": "sim3.Main",

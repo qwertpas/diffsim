@@ -15,21 +15,9 @@ public class UserCode{
 
     public static void execute(){ //this function is run 50 times a second (every 0.02 second)
 
-        //set powers to the simulated robot drivetrain
-
+        double forward = Controls.rawY;
         
-        Main.robot.setDrivePowers(0.5, -0.5, 0.5, -0.5); //power ranges from -1 to 1
-
-        /**
-         * Try this if you want to control the robot using a joystick or mouse coordinates:
-         * 
-         *      lPower = Controls.rawY - Controls.rawX
-         *      rPower = Controls.rawY + Controls.rawX
-         * 
-         * The robot may move unexpectedly at first. Mess around with scaling or negatives
-         * until the controls feel intuitive to you.
-         */        
-
+        Main.robot.setDrivePowers(forward, -forward, forward, -forward); //power ranges from -1 to 1
 
         graph(); //updating the graphs
     }
@@ -46,7 +34,7 @@ public class UserCode{
     static GraphicDebug velocityWindow = new GraphicDebug("Velocity", new Serie[]{currentVelocitySerie});
     
     private static void graph(){
-        currentVelocitySerie.addPoint(Main.elaspedTime, Util.metersToInches(Main.robot.linVelo));
+        currentVelocitySerie.addPoint(Main.elaspedTime, Util.metersToFeet(Main.robot.linVelo.getMagnitude()));
 
         GraphicDebug.paintAll();
     }

@@ -54,15 +54,15 @@ public class GraphicSim extends JPanel implements MouseListener {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		int x = (int) Util.posModulo(Main.robot.x * Constants.DISPLAY_SCALE.getDouble(), windowWidth); // robot position in pixels
-		int y = (int) Util.posModulo(Main.robot.y * Constants.DISPLAY_SCALE.getDouble(), windowHeight);
+		int x = (int) Util.posModulo(Main.robot.position.x * Constants.DISPLAY_SCALE.getDouble(), windowWidth); // robot position in pixels
+		int y = (int) Util.posModulo(Main.robot.position.y * Constants.DISPLAY_SCALE.getDouble(), windowHeight);
 
-		g.drawString("linear velocity (ft/sec) " + Util.roundHundreths(Util.metersToFeet(Main.robot.linVelo)), 500, 650);
-		g.drawString("left module force "+ Util.roundHundreths(Main.robot.leftModule.force), 500, 675);
-		g.drawString("top motor torque "+ Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 500, 700);
-		g.drawString("bottom motor torque " + Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 500, 725);
-		g.drawString("top motor speed " + Util.roundHundreths(Main.robot.leftModule.topMotor.radPerSec), 500, 750);
-		g.drawString("bottom motor torque " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.radPerSec), 500, 775);
+		g.drawString("linear velocity (ft/sec) " + Util.roundHundreths(Util.metersToFeet(Main.robot.leftModule.wheelTanVelo)), 500, 650);
+		g.drawString("L module force "+ Util.roundHundreths(Main.robot.leftModule.force), 500, 675);
+		g.drawString("LT motor torque "+ Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 500, 700);
+		g.drawString("LB motor torque " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.torque), 500, 725);
+		g.drawString("LT motor speed " + Util.roundHundreths(Main.robot.leftModule.topMotor.angVelo), 500, 750);
+		g.drawString("LB motor speed " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.angVelo), 500, 775);
 
 
 		//drawing the grid
