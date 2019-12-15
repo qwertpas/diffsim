@@ -15,6 +15,7 @@ public class Robot{
     Vector2D linAccel = new Vector2D(0, 0);
     double angAccel = 0;
 
+    double torqueMotors = 0;
     double torqueNet = 0;
     Vector2D forceNet = new Vector2D(0, 0);
     Boolean slipping = false;
@@ -35,27 +36,27 @@ public class Robot{
         leftModule.update();
         rightModule.update();
 
-        forceNet = leftModule.force.add(rightModule.force); //force on robot center of mass
-        // torqueNet = calcRobotTorque(leftModule.force, rightModule.force); //torque around robot center
+        forceNet = leftModule.force.add(rightModule.force).rotate(heading); //force on robot center of mass
+        torqueNet = calcRobotTorque(leftModule.force, rightModule.force); //torque around robot center
 
         linAccel = forceNet.scalarDiv(Constants.ROBOT_MASS.getDouble()); //linear acceleration of robot center of mass
-        // angAccel = torqueNet / Constants.ROBOT_ROT_INERTIA; //angular acceleration around robot center
+        angAccel = torqueNet / Constants.ROBOT_ROT_INERTIA; //angular acceleration around robot center
         
         linVelo = linAccel.scalarMult(dt).add(linVelo); //linear velocity of robot center of mass
-        // angVelo = angVelo + angAccel * dt; //angular velocity around robot center
+        angVelo = angVelo + angAccel * dt; //angular velocity around robot center
 
-        // leftModule.setTranslation(linVelo.scalarAdd(angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
-        // rightModule.setTranslation(linVelo.scalarAdd(-angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
-        leftModule.setTranslation(linVelo);
-        rightModule.setTranslation(linVelo);
+        leftModule.setTranslation(linVelo.scalarAdd(angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
+        rightModule.setTranslation(linVelo.scalarAdd(-angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
+        // leftModule.setTranslation(linVelo);
+        // rightModule.setTranslation(linVelo);
 
-        // heading = heading + angVelo * dt; //integrating angVelo
+        heading = heading + angVelo * dt; //integrating angVelo
 
         position = linVelo.scalarMult(dt).add(position);
     }
 
     private double calcRobotTorque(Vector2D forceL, Vector2D forceR){
-        double torqueMotors = (forceL.getMagnitude() - forceR.getMagnitude()) * Constants.HALF_DIST_BETWEEN_WHEELS; //torque around center of robot
+        torqueMotors = (forceR.x - forceL.x) * Constants.HALF_DIST_BETWEEN_WHEELS; //torque around center of robot
         torqueNet = Util.applyFrictions(torqueMotors, angVelo, Constants.WHEEL_SCRUB_STATIC, Constants.WHEEL_SCRUB_KINE, Constants.WHEEL_SCRUB_FRIC_THRESHOLD.getDouble());
         return torqueNet;
     }

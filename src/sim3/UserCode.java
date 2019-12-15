@@ -16,8 +16,9 @@ public class UserCode{
     public static void execute(){ //this function is run 50 times a second (every 0.02 second)
 
         double forward = -Controls.rawY;
+        double turn = Controls.rawX;
         
-        Main.robot.setDrivePowers(forward, -forward, forward, -forward); //power ranges from -1 to 1
+        Main.robot.setDrivePowers(forward+turn, -forward-turn, forward-turn, -forward+turn); //power ranges from -1 to 1
 
         graph(); //updating the graphs
     }
@@ -27,14 +28,18 @@ public class UserCode{
 
 
     // Motion graphs
-    static Serie currentPositionSerie = new Serie(Color.BLUE, 3);
-    static GraphicDebug positionWindow = new GraphicDebug("Position", new Serie[]{currentPositionSerie});
+    static Serie w1s1 = new Serie(Color.BLUE, 3);
+    static Serie w1s2 = new Serie(Color.RED, 3);
+    static GraphicDebug w1 = new GraphicDebug("forces", new Serie[]{w1s1, w1s2});
 
-    static Serie currentVelocitySerie = new Serie(Color.BLUE, 3);
-    static GraphicDebug velocityWindow = new GraphicDebug("Velocity", new Serie[]{currentVelocitySerie});
+    static Serie w2s1 = new Serie(Color.BLUE, 3);
+    static GraphicDebug w2 = new GraphicDebug("angvelo", new Serie[]{w2s1});
     
     private static void graph(){
-        currentVelocitySerie.addPoint(Main.elaspedTime, Util.metersToFeet(Main.robot.linVelo.getMagnitude()));
+        w1s1.addPoint(Controls.rawX, Controls.rawY);
+        // w1s2.addPoint(Main.elaspedTime, Main.robot.leftModule.force.x);
+
+        w2s1.addPoint(Main.elaspedTime, Main.robot.angVelo);
 
         GraphicDebug.paintAll();
     }

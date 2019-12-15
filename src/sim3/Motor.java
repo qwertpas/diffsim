@@ -19,5 +19,12 @@ class Motor{
         return torque;
     }
 
+    public static void main(String[] args) {
+        Motor mot = new Motor();
+        mot.setAngSpeed(-142);
+        mot.setVoltage(-12);
+        System.out.println(mot.getTorque());
+    }
+
 
 }

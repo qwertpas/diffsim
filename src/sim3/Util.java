@@ -7,13 +7,14 @@ public class Util {
 
   public static double applyFrictions(double force, double velocity, double STATIC_FRIC, double KINE_FRIC,
       double FRIC_THRESHOLD) {
-    if (Math.abs(velocity) < FRIC_THRESHOLD && Math.abs(force) < STATIC_FRIC) {
-      force = 0;
-    } else {
-      double direction = Math.copySign(1, velocity); // either +1 or -1
-      force = force - KINE_FRIC * direction;
+    
+    if(Math.abs(velocity) < FRIC_THRESHOLD && Math.abs(force) < STATIC_FRIC){ //if not moving, apply static friction
+      return 0;
     }
-    return force;
+
+    double velocity_direction = Math.copySign(1, velocity);
+    // double force_magnitude = Math.abs(force);
+    return force - velocity_direction * KINE_FRIC;
   }
 
   public static double rpmToRadSec(double rpm) { // Rotations per minute to Radians per second
@@ -427,6 +428,12 @@ public class Util {
 
     Vector2D scalarDiv(double scalar){
       return new Vector2D(this.x/(double)scalar, this.y/(double)scalar);
+    }
+
+    Vector2D rotate(double radiansToRotate){
+      double sin = Math.sin(radiansToRotate);
+      double cos = Math.cos(radiansToRotate);
+      return new Vector2D(x*cos - y*sin, x*sin + y*cos);
     }
 
     double getMagnitude(){
