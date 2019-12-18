@@ -39,9 +39,7 @@ class DiffModule {
 
         wheelTorque = (topMotor.getTorque() - bottomMotor.getTorque()) * Constants.GEAR_RATIO.getDouble();
 
-        // if(inverted) wheelTorque *= -1;
-
-        // wheelTorque = Util.applyFrictions(wheelTorque, wheelAngVelo, 1, 1, 0.01);
+        wheelTorque = Util.applyFrictions(wheelTorque, wheelAngVelo, 1, 1, 0.01);
 
         double force_mag = wheelTorque / Constants.WHEEL_RADIUS.getDouble(); // F=ma
         force = new Vector2D(force_mag, 0);

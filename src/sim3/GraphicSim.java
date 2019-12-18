@@ -57,18 +57,18 @@ public class GraphicSim extends JPanel implements MouseListener {
 		int x = (int) Util.posModulo(Main.robot.position.x * Constants.DISPLAY_SCALE.getDouble(), windowWidth); // robot position in pixels
 		int y = (int) Util.posModulo(Main.robot.position.y * Constants.DISPLAY_SCALE.getDouble(), windowHeight);
 
-		g.drawString("torque net " + Util.roundHundreths(Main.robot.torqueNet), 500, 575);
-		g.drawString("torquemotors " + Util.roundHundreths(Math.toDegrees(Main.robot.torqueMotors)), 500, 600);
-		g.drawString("angAccel " + Util.roundHundreths(Main.robot.angAccel), 500, 625);
-		g.drawString("ang Velo " + Util.roundHundreths(Main.robot.angVelo), 500, 650);
-		g.drawString("L module force "+ Util.roundHundreths(Main.robot.leftModule.force.x), 500, 675);
-		g.drawString("R module force "+ Util.roundHundreths(Main.robot.rightModule.force.x), 500, 700);
-		g.drawString("L module speed " + Util.roundHundreths(Main.robot.leftModule.wheelAngVelo), 500, 725);
-		g.drawString("R module speed " + Util.roundHundreths(Main.robot.rightModule.wheelAngVelo), 500, 750);
-		g.drawString("LT motor speed " + Util.roundHundreths(Main.robot.leftModule.topMotor.angVelo), 500, 775);
-		g.drawString("LB motor speed " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.angVelo), 500, 800);
-		g.drawString("LT motor torque " + Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 700, 775);
-		g.drawString("LB motor torque " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.torque), 700, 800);
+		// g.drawString("torque net " + Util.roundHundreths(Main.robot.torqueNet), 500, 575);
+		g.drawString("heading " + Util.roundHundreths(Main.robot.heading), 500, 600);
+		g.drawString("linvelo x " + Util.roundHundreths(Main.robot.linVelo.x), 500, 625);
+		g.drawString("linvelo y " + Util.roundHundreths(Main.robot.linVelo.y), 500, 650);
+		// g.drawString("L module force "+ Util.roundHundreths(Main.robot.leftModule.force.x), 500, 675);
+		// g.drawString("R module force "+ Util.roundHundreths(Main.robot.rightModule.force.x), 500, 700);
+		// g.drawString("L module speed " + Util.roundHundreths(Main.robot.leftModule.wheelAngVelo), 500, 725);
+		// g.drawString("R module speed " + Util.roundHundreths(Main.robot.rightModule.wheelAngVelo), 500, 750);
+		// g.drawString("LT motor speed " + Util.roundHundreths(Main.robot.leftModule.topMotor.angVelo), 500, 775);
+		// g.drawString("LB motor speed " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.angVelo), 500, 800);
+		// g.drawString("LT motor torque " + Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 700, 775);
+		// g.drawString("LB motor torque " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.torque), 700, 800);
 
 
 		//drawing the grid

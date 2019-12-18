@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Util$Vector2D",
+            "request": "launch",
+            "mainClass": "sim3.Util$Vector2D",
+            "projectName": "joysim"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Motor",
             "request": "launch",
             "mainClass": "sim3.Motor",

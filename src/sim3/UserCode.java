@@ -36,7 +36,7 @@ public class UserCode{
     static GraphicDebug w2 = new GraphicDebug("angvelo", new Serie[]{w2s1});
     
     private static void graph(){
-        w1s1.addPoint(Controls.rawX, Controls.rawY);
+        w1s1.addPoint(Controls.rawX, -Controls.rawY);
         // w1s2.addPoint(Main.elaspedTime, Main.robot.leftModule.force.x);
 
         w2s1.addPoint(Main.elaspedTime, Main.robot.angVelo);

@@ -13,7 +13,6 @@ public class Util {
     }
 
     double velocity_direction = Math.copySign(1, velocity);
-    // double force_magnitude = Math.abs(force);
     return force - velocity_direction * KINE_FRIC;
   }
 
@@ -407,6 +406,8 @@ public class Util {
       return forcesum;
     }
 
+    
+
     Vector2D subtract(Vector2D f){
       Vector2D forcesum = new Vector2D();
       forcesum.x = this.x - f.x;
@@ -440,6 +441,14 @@ public class Util {
       return Math.sqrt(x*x + y*y);
     }
 
+    public String toString() {
+      return "(" + x + ", " + y + ")";
+    }
+
+  }
+
+  public static void main(String[] args) {
+    System.out.println(new Vector2D(-1,0).add(new Vector2D(2,0)));
   }
 
 

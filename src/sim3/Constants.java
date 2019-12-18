@@ -5,9 +5,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import sim3.Util;
-
-
 
 public class Constants{
 
@@ -46,9 +43,9 @@ public class Constants{
     static Constant GEAR_FRIC_THRESHOLD = new Constant("GEAR_FRIC_THRESHOLD", 0.01, Type.DOUBLE); //lowest motor speed in rad/sec considered as 'moving' to kine fric
 
     // Wheel scrub torque slows turning, coeff is a combo of fric coeff, drop center, robot length.
-    static Constant WHEEL_SCRUB_STATIC_COEFF = new Constant("WHEEL_SCRUB_STATIC_COEFF", 0.012, Type.DOUBLE); 
-    static Constant WHEEL_SCRUB_KINE_COEFF = new Constant("WHEEL_SCRUB_KINE_COEFF", 0.01, Type.DOUBLE); 
-    static Constant WHEEL_SCRUB_FRIC_THRESHOLD = new Constant("WHEEL_SCRUB_FRIC_THRESHOLD", 0.01, Type.DOUBLE); //lowest robot rad/sec considered as 'moving' to kine fric
+    static Constant WHEEL_SCRUB_STATIC_COEFF = new Constant("WHEEL_SCRUB_STATIC_COEFF", 0.2, Type.DOUBLE); 
+    static Constant WHEEL_SCRUB_KINE_COEFF = new Constant("WHEEL_SCRUB_KINE_COEFF", 0.15, Type.DOUBLE); 
+    static Constant WHEEL_SCRUB_FRIC_THRESHOLD = new Constant("WHEEL_SCRUB_FRIC_THRESHOLD", 0.001, Type.DOUBLE); //lowest robot rad/sec considered as 'moving' to kine fric
 
     static Constant GRAV_ACCEL = new Constant("GRAV_ACCEL", 9.81, Type.DOUBLE);
 
