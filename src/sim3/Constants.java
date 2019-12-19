@@ -43,8 +43,8 @@ public class Constants{
     static Constant GEAR_FRIC_THRESHOLD = new Constant("GEAR_FRIC_THRESHOLD", 0.01, Type.DOUBLE); //lowest motor speed in rad/sec considered as 'moving' to kine fric
 
     // Wheel scrub torque slows turning, coeff is a combo of fric coeff, drop center, robot length.
-    static Constant WHEEL_SCRUB_STATIC_COEFF = new Constant("WHEEL_SCRUB_STATIC_COEFF", 0.2, Type.DOUBLE); 
-    static Constant WHEEL_SCRUB_KINE_COEFF = new Constant("WHEEL_SCRUB_KINE_COEFF", 0.15, Type.DOUBLE); 
+    static Constant WHEEL_SCRUB_STATIC_COEFF = new Constant("WHEEL_SCRUB_STATIC_COEFF", 0.08, Type.DOUBLE); 
+    static Constant WHEEL_SCRUB_KINE_COEFF = new Constant("WHEEL_SCRUB_KINE_COEFF", 0.07, Type.DOUBLE); 
     static Constant WHEEL_SCRUB_FRIC_THRESHOLD = new Constant("WHEEL_SCRUB_FRIC_THRESHOLD", 0.001, Type.DOUBLE); //lowest robot rad/sec considered as 'moving' to kine fric
 
     static Constant GRAV_ACCEL = new Constant("GRAV_ACCEL", 9.81, Type.DOUBLE);
@@ -57,7 +57,7 @@ public class Constants{
     static double REDLINE_STALL_TORQUE = 0.7080;
     static double REDLINE_TORQUE_SLOPE = -3.779e-05;
 
-    static Constant CONTROLLER_INDEX = new Constant("Controller_INDEX", 0, Type.INT); //which joystick?
+    static Constant CONTROLLER_INDEX = new Constant("CONTROLLER_INDEX", 0, Type.INT); //which joystick?
 
     static Constant DISPLAY_SCALE = new Constant("DISPLAY_SCALE", 100, Type.DOUBLE); //in pixels per meter
 

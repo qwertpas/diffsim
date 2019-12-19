@@ -1,6 +1,7 @@
 package sim3;
 
 import sim3.Util.*;
+import sim3.Util.Vector2D.Type;
 
 public class Robot{
 
@@ -36,7 +37,10 @@ public class Robot{
         leftModule.update();
         rightModule.update();
 
-        forceNet = leftModule.force.add(rightModule.force).rotate(heading); //force on robot center of mass
+        // forceNet = leftModule.force.add(rightModule.force).rotate(heading); //force on robot center of mass
+
+
+        forceNet = new Vector2D(leftModule.force.x + rightModule.force.x, 0, Type.CARTESIAN).rotate(heading); //force on robot center of mass
         torqueNet = calcRobotTorque(leftModule.force, rightModule.force); //torque around robot center
 
         linAccel = forceNet.scalarDiv(Constants.ROBOT_MASS.getDouble()); //linear acceleration of robot center of mass

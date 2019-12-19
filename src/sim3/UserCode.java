@@ -30,10 +30,10 @@ public class UserCode{
     // Motion graphs
     static Serie w1s1 = new Serie(Color.BLUE, 3);
     static Serie w1s2 = new Serie(Color.RED, 3);
-    static GraphicDebug w1 = new GraphicDebug("linVelo", new Serie[]{w1s1, w1s2}, 100);
+    static GraphicDebug w1 = new GraphicDebug("position", new Serie[]{w1s1, w1s2}, 100);
 
     static Serie w2s1 = new Serie(Color.BLUE, 3);
-    static GraphicDebug w2 = new GraphicDebug("force net", new Serie[]{w2s1}, 100);
+    static GraphicDebug w2 = new GraphicDebug("angular velocity", new Serie[]{w2s1}, 200);
     
     private static void graph(){
         w1s1.addPoint(Main.robot.position.x, Main.robot.position.y);
