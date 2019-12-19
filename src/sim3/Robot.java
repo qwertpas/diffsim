@@ -44,11 +44,10 @@ public class Robot{
         
         linVelo = linVelo.add(linAccel.scalarMult(dt)); //linear velocity of robot center of mass
         angVelo = angVelo + angAccel * dt; //angular velocity around robot center
-
-        leftModule.setTranslation(linVelo.scalarAdd(angVelo * Constants.HALF_DIST_BETWEEN_WHEELS).rotate(-heading));
-        rightModule.setTranslation(linVelo.scalarAdd(-angVelo * Constants.HALF_DIST_BETWEEN_WHEELS).rotate(-heading));
-        // leftModule.setTranslation(linVelo);
-        // rightModule.setTranslation(linVelo);
+        
+        //rotate linVelo to find velo of module relative in robot reference frame, then add the tangential velocity from the spin
+        leftModule.setTranslation(linVelo.rotate(-heading).scalarAdd(-angVelo * Constants.HALF_DIST_BETWEEN_WHEELS)); 
+        rightModule.setTranslation(linVelo.rotate(-heading).scalarAdd(angVelo * Constants.HALF_DIST_BETWEEN_WHEELS));
 
         heading = heading + angVelo * dt; //integrating angVelo
 
@@ -62,10 +61,10 @@ public class Robot{
     }
 
     public void setDrivePowers(double lt, double lb, double rt, double rb){
-        leftModule.topMotor.setVoltage(lt*12);
-        leftModule.bottomMotor.setVoltage(lb*12);
-        rightModule.topMotor.setVoltage(rt*12);
-        rightModule.bottomMotor.setVoltage(rb*12);
+        leftModule.topMotor.setVoltage(Util.limit(lt*12, 12));
+        leftModule.bottomMotor.setVoltage(Util.limit(lb*12, 12));
+        rightModule.topMotor.setVoltage(Util.limit(rt*12, 12));
+        rightModule.bottomMotor.setVoltage(Util.limit(rb*12, 12));
     }
 
     

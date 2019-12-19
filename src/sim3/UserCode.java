@@ -42,7 +42,8 @@ public class UserCode{
         // w1s2.addPoint(Main.elaspedTime, Main.robot.rightModule.force.x);
         // w1s2.addPoint(Main.elaspedTime, Main.robot.leftModule.force.x);
 
-        w2s1.addPoint(Main.robot.forceNet.x, Main.robot.forceNet.y);
+        w2s1.addPoint(Main.elaspedTime, Main.robot.angVelo);
+        // w2s1.addPoint(Main.robot.forceNet.x, Main.robot.forceNet.y);
 
         GraphicDebug.paintAll();
     }
