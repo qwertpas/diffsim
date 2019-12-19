@@ -1,6 +1,7 @@
 package sim3;
 
 import org.ejml.simple.SimpleMatrix;
+
 import sim3.Util.*;
 
 class DiffModule {
@@ -8,7 +9,7 @@ class DiffModule {
     Motor topMotor;
     Motor bottomMotor;
 
-    Vector2D moduleTranslation = new Vector2D(0, 0); // translational velocity of the module
+    Vector2D moduleTranslation = new Vector2D(); // translational velocity of the module
     double wheelTanVelo;
     double wheelAngVelo; // angular velocity of the wheel
     double moduleAngVelo; // angular velocity of the module
@@ -16,7 +17,7 @@ class DiffModule {
 
     double wheelTorque;
 
-    Vector2D force = new Vector2D(0, 0);
+    Vector2D force = new Vector2D();
 
     double dt;
     double lastTime;
@@ -28,8 +29,8 @@ class DiffModule {
     }
 
     void update() {
-        // wheelTanVelo = (new Vector2D(moduleAngle)).dotProduct(moduleTranslation); // tangential velocity of the wheel
-        wheelTanVelo = moduleTranslation.x; // tangential velocity of the wheel
+        wheelTanVelo = (new Vector2D(moduleAngle)).dotProduct(moduleTranslation); // tangential velocity of the wheel
+        // wheelTanVelo = moduleTranslation.x; // tangential velocity of the wheel
 
         wheelAngVelo = wheelTanVelo / Constants.WHEEL_RADIUS.getDouble(); // tangential velocity = radius * angular
                                                                           // velocity
@@ -42,7 +43,8 @@ class DiffModule {
         wheelTorque = Util.applyFrictions(wheelTorque, wheelAngVelo, 1, 1, 0.01);
 
         double force_mag = wheelTorque / Constants.WHEEL_RADIUS.getDouble(); // F=ma
-        force = new Vector2D(force_mag, 0);
+        //TODO: add module rotation
+        force = new Vector2D(force_mag, 0, Vector2D.Type.POLAR);
     }
 
     void setTranslation(Vector2D moduleTranslation_input) {

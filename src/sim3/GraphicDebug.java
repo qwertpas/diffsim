@@ -55,7 +55,7 @@ public class GraphicDebug extends JPanel{
         System.out.println("New GraphicDebug: " + name);
     }
 
-    public GraphicDebug(String name, Serie[] series_input){ // same but allows creating series outside and no need to call addSerie()
+    public GraphicDebug(String name, Serie[] series_input, int maxPoints_input){ // same but allows creating series outside and no need to call addSerie()
         for(Serie serie_input : series_input){
             series.add(serie_input);
         }
@@ -66,6 +66,11 @@ public class GraphicDebug extends JPanel{
 		frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         calcScales();
+
+        for(Serie serie : series){
+            serie.maxLength = maxPoints_input;
+        }
+        
         graphicDebugs.add(this);
 
         System.out.println("New GraphicDebug: " + name);
@@ -86,6 +91,8 @@ public class GraphicDebug extends JPanel{
     public void addSerie(Color color, int lineWidth){
         series.add(new Serie(color, lineWidth));
     }
+
+    
     
     int leftMargin = 20;
     int rightMargin = 20;
@@ -175,6 +182,7 @@ public class GraphicDebug extends JPanel{
     public static class Serie{ //series but singular :/
         Color color = Color.BLACK;
         int lineWidth = 1;
+        int maxLength = 300;
         volatile ArrayList<Point> points = new ArrayList<Point>();
         volatile Boolean on = false; //set to true once UserCode initializes
 
@@ -197,6 +205,9 @@ public class GraphicDebug extends JPanel{
         public void addPoint(double x, double y){
             synchronized(points){ //synchronized so usercode thread can call this while painting and avoid concurrentModificationException
                 points.add(new Point(x, y));
+            }
+            if(points.size() > maxLength){
+                points.remove(0);
             }
         }
 

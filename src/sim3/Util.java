@@ -385,34 +385,42 @@ public class Util {
   public static class Vector2D{
     double x, y;
 
-    Vector2D(double magnitude, double direction){
-      x = magnitude * Math.cos(direction);
-      y = magnitude * Math.sin(direction);
+    enum Type{
+      CARTESIAN, POLAR
     }
 
-    Vector2D(){
-      //empty so that you can set x and y yourself
+    Vector2D(double magnitudeOrX, double directionOrY, Type vectorType){
+      if(vectorType == Type.CARTESIAN){
+        x = magnitudeOrX;
+        y = directionOrY;
+      }else{
+        x = magnitudeOrX * Math.cos(directionOrY);
+        y = magnitudeOrX * Math.sin(directionOrY);
+      }
     }
 
+    //unit vector
     Vector2D(double direction){
       x = Math.cos(direction);
       y = Math.sin(direction);
     }
 
-    Vector2D add(Vector2D f){
-      Vector2D forcesum = new Vector2D();
-      forcesum.x = this.x + f.x;
-      forcesum.y = this.y + f.y;
-      return forcesum;
+    //zero vector
+    Vector2D(){
+      x = 0;
+      y = 0;
     }
 
-    
+    Vector2D add(Vector2D valueToAdd){
+      return new Vector2D(this.x + valueToAdd.x,
+                          this.y + valueToAdd.y,
+                          Type.CARTESIAN);
+    }
 
-    Vector2D subtract(Vector2D f){
-      Vector2D forcesum = new Vector2D();
-      forcesum.x = this.x - f.x;
-      forcesum.y = this.y - f.y;
-      return forcesum;
+    Vector2D subtract(Vector2D valueToSubtract){
+      return new Vector2D(this.x + valueToSubtract.x,
+                          this.y + valueToSubtract.y,
+                          Type.CARTESIAN);
     }
 
     double dotProduct(Vector2D f){
@@ -420,21 +428,29 @@ public class Util {
     }
 
     Vector2D scalarAdd(double scalar){
-      return new Vector2D(this.x+scalar, this.y+scalar);
+      return new Vector2D(this.x + scalar, 
+                          this.y + scalar,
+                          Type.CARTESIAN);
     }
 
     Vector2D scalarMult(double scalar){
-      return new Vector2D(this.x*scalar, this.y*scalar);
+      return new Vector2D(this.x * scalar,
+                          this.y * scalar,
+                          Type.CARTESIAN);
     }
 
     Vector2D scalarDiv(double scalar){
-      return new Vector2D(this.x/(double)scalar, this.y/(double)scalar);
+      return new Vector2D(this.x / (double) scalar,
+                          this.y / (double) scalar,
+                          Type.CARTESIAN);
     }
 
     Vector2D rotate(double radiansToRotate){
       double sin = Math.sin(radiansToRotate);
       double cos = Math.cos(radiansToRotate);
-      return new Vector2D(x*cos - y*sin, x*sin + y*cos);
+      return new Vector2D(x*cos - y*sin, 
+                          x*sin + y*cos, 
+                          Type.CARTESIAN);
     }
 
     double getMagnitude(){
@@ -442,13 +458,9 @@ public class Util {
     }
 
     public String toString() {
-      return "(" + x + ", " + y + ")";
+      return "(" + Util.roundHundreths(x) + ", " + Util.roundHundreths(y) + ")";
     }
 
-  }
-
-  public static void main(String[] args) {
-    System.out.println(new Vector2D(-1,0).add(new Vector2D(2,0)));
   }
 
 
