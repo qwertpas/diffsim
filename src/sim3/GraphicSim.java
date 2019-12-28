@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.ImageObserver;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
@@ -29,8 +30,8 @@ public class GraphicSim extends JPanel implements MouseListener {
 	static File robotFile;
 	static File moduleFile;
 
-	static Image robotImage;
-	static Image moduleImage;
+	static BufferedImage robotImage;
+	static BufferedImage moduleImage;
 
 	static int screenHeight;
 	static int screenWidth;
@@ -39,6 +40,7 @@ public class GraphicSim extends JPanel implements MouseListener {
 	static int robotImgHeight;
 	static int robotDisplayWidth;
 	static double robotScale;
+	static int moduleDisplayWidth;
 
 	static ArrayList<Point> points = new ArrayList<Point>();
 
@@ -63,8 +65,8 @@ public class GraphicSim extends JPanel implements MouseListener {
 		g.drawString("linvelo y " + Util.roundHundreths(Main.robot.linVelo.y), 500, 650);
 		g.drawString("leftModTrans "+ Main.robot.leftModule.moduleTranslation, 500, 675);
 		g.drawString("rightModTrans "+ Main.robot.rightModule.moduleTranslation, 500, 700);
-		g.drawString("L module speed " + Util.roundHundreths(Main.robot.leftModule.wheelAngVelo), 500, 725);
-		g.drawString("R module speed " + Util.roundHundreths(Main.robot.rightModule.wheelAngVelo), 500, 750);
+		g.drawString("L module angle " + Util.roundHundreths(Main.robot.leftModule.moduleAngle), 500, 725);
+		g.drawString("R module angle " + Util.roundHundreths(Main.robot.rightModule.moduleAngle), 500, 750);
 		// g.drawString("LT motor speed " + Util.roundHundreths(Main.robot.leftModule.topMotor.angVelo), 500, 775);
 		// g.drawString("LB motor speed " + Util.roundHundreths(Main.robot.leftModule.bottomMotor.angVelo), 500, 800);
 		// g.drawString("LT motor torque " + Util.roundHundreths(Main.robot.leftModule.topMotor.torque), 700, 775);
@@ -90,8 +92,11 @@ public class GraphicSim extends JPanel implements MouseListener {
 		g.translate((int) (x / robotScale), (int) (y / robotScale));
 		g.drawImage(robotImage, 0, 0, this);
 
-		g.drawImage(moduleImage, robotDisplayWidth/2, 0, this);
-		g.drawImage(moduleImage, robotDisplayWidth/2, robotDisplayWidth, this);
+
+		drawFromCenter(g, moduleImage, 0, robotDisplayWidth/2, Main.robot.leftModule.moduleAngle, this);
+
+		drawFromCenter(g, moduleImage, robotDisplayWidth, robotDisplayWidth/2, Main.robot.rightModule.moduleAngle, this);
+
 
 
 
@@ -114,6 +119,7 @@ public class GraphicSim extends JPanel implements MouseListener {
 			moduleImage = ImageIO.read(moduleFile);
 
 			setDisplayScales(robotFile);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -138,6 +144,15 @@ public class GraphicSim extends JPanel implements MouseListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void drawFromCenter(Graphics g, BufferedImage image, int x, int y, double rotation, ImageObserver imageObserver){
+		Graphics2D g2d = (Graphics2D) g;
+		AffineTransform initialTransform = g2d.getTransform();
+		g.translate(y + image.getWidth()/2, x + image.getWidth()/2);
+		g2d.rotate(rotation);
+		g.drawImage(image, -image.getWidth()/2, -image.getWidth()/2, imageObserver);
+		g2d.setTransform(initialTransform);
 	}
 
 	

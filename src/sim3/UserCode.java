@@ -18,7 +18,7 @@ public class UserCode{
         double forward = -Controls.rawY;
         double turn = Controls.rawX;
         
-        Main.robot.setDrivePowers(forward+turn, -forward-turn, forward-turn, -forward+turn); //power ranges from -1 to 1
+        Main.robot.setDrivePowers(forward+turn, -(forward+turn), forward-turn, -(forward-turn)); //power ranges from -1 to 1
 
         graph(); //updating the graphs
     }
@@ -30,13 +30,13 @@ public class UserCode{
     // Motion graphs
     static Serie w1s1 = new Serie(Color.BLUE, 3);
     static Serie w1s2 = new Serie(Color.RED, 3);
-    static GraphicDebug w1 = new GraphicDebug("position", new Serie[]{w1s1, w1s2}, 100);
+    static GraphicDebug w1 = new GraphicDebug("left force", new Serie[]{w1s1, w1s2}, 100);
 
     static Serie w2s1 = new Serie(Color.BLUE, 3);
     static GraphicDebug w2 = new GraphicDebug("angular velocity", new Serie[]{w2s1}, 200);
     
     private static void graph(){
-        w1s1.addPoint(Main.robot.position.x, Main.robot.position.y);
+        w1s1.addPoint(Main.robot.leftModule.force);
 
         // w1s1.addPoint(Main.elaspedTime, Main.robot.leftModule.force.x);
         // w1s2.addPoint(Main.elaspedTime, Main.robot.rightModule.force.x);

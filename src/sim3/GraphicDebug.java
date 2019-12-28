@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import sim3.GraphicDebug.Serie.Point;
+import sim3.Util.Vector2D;
 
 public class GraphicDebug extends JPanel{
     private static final long serialVersionUID = -3303992246381800667L;
@@ -205,6 +206,15 @@ public class GraphicDebug extends JPanel{
         public void addPoint(double x, double y){
             synchronized(points){ //synchronized so usercode thread can call this while painting and avoid concurrentModificationException
                 points.add(new Point(x, y));
+            }
+            if(points.size() > maxLength){
+                points.remove(0);
+            }
+        }
+
+        public void addPoint(Vector2D vector2d){
+            synchronized(points){ //synchronized so usercode thread can call this while painting and avoid concurrentModificationException
+                points.add(new Point(vector2d.x, vector2d.y));
             }
             if(points.size() > maxLength){
                 points.remove(0);

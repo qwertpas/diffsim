@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="dist/JInputJoystickTestV2.jar"/>
 	<classpathentry kind="lib" path="dist/lib/jinput.jar"/>
-	<classpathentry kind="lib" path="jinput/jinput.jar"/>
 	<classpathentry kind="lib" path="lib/ejml-cdense-0.38.jar"/>
 	<classpathentry kind="lib" path="lib/ejml-core-0.38.jar"/>
 	<classpathentry kind="lib" path="lib/ejml-ddense-0.38.jar"/>

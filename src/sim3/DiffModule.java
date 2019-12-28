@@ -10,7 +10,8 @@ class DiffModule {
     Motor bottomMotor;
 
     Vector2D moduleTranslation = new Vector2D(); // translational velocity of the module
-    double wheelTanVelo;
+    double wheelTanVelo; //velocity of the surface wheel that is driving the ground
+    double wheelScrubVelo; //velocity of the surface wheel that is scrubbing the ground
     double wheelAngVelo; // angular velocity of the wheel
     double moduleAngVelo; // angular velocity of the module
     double moduleAngle = 0;
@@ -29,22 +30,23 @@ class DiffModule {
     }
 
     void update() {
-        wheelTanVelo = (new Vector2D(moduleAngle)).dotProduct(moduleTranslation); // tangential velocity of the wheel
+        wheelTanVelo = (new Vector2D(moduleAngle)).dotProduct(moduleTranslation); // component of the movement in the direction of the wheel
+        wheelScrubVelo = (new Vector2D(moduleAngle)).rotate(Math.PI/2.0).dotProduct(moduleTranslation); // component of the movement perperdicular to the wheel
         // wheelTanVelo = moduleTranslation.x; // tangential velocity of the wheel
 
         wheelAngVelo = wheelTanVelo / Constants.WHEEL_RADIUS.getDouble(); // tangential velocity = radius * angular
                                                                           // velocity
 
         updateMotorSpeeds();
-        // updateModuleAngle();
+        updateModuleAngle();
 
         wheelTorque = (topMotor.getTorque() - bottomMotor.getTorque()) * Constants.GEAR_RATIO.getDouble();
 
         wheelTorque = Util.applyFrictions(wheelTorque, wheelAngVelo, 1, 1, 0.01);
 
-        double force_mag = wheelTorque / Constants.WHEEL_RADIUS.getDouble(); // F=ma
-        //TODO: add module rotation
-        force = new Vector2D(force_mag, 0, Vector2D.Type.POLAR);
+        double driveForce = wheelTorque / Constants.WHEEL_RADIUS.getDouble(); // F=ma
+        double fricForce = Util.applyFrictions(0, wheelScrubVelo, Constants.WHEEL_STATIC_FRIC, Constants.WHEEL_KINE_FRIC, Constants.WHEEL_FRIC_THRESHOLD.getDouble());
+        force = new Vector2D(driveForce, fricForce, Vector2D.Type.CARTESIAN);
     }
 
     void setTranslation(Vector2D moduleTranslation_input) {
@@ -55,7 +57,7 @@ class DiffModule {
         dt = (System.nanoTime() - lastTime) / 1e+9; // change in time (seconds) used for integrating
         lastTime = System.nanoTime();
 
-        double moduleTorque = topMotor.getTorque() + bottomMotor.getTorque();
+        double moduleTorque = topMotor.torque + bottomMotor.torque;
         double moduleAngAccel = moduleTorque / Constants.MODULE_ROT_INERTIA.getDouble();
         moduleAngVelo = moduleAngAccel * dt + moduleAngVelo; // integration
         moduleAngle = moduleAngVelo * dt + moduleAngle; // second integration
